@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selamat Ulang Tahun</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #1a1a40;
+      background-image: url('img/bg.png');
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      font-family: sans-serif;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      text-align: center;
+    }
+    .awal {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 5px solid white;
+      padding: 20px;
+      background-color: rgba(0,0,0,0.5);
+      border-radius: 20px;
+      margin-top: 20px;
+    }
+    .awal iframe {
+      width: 150px;
+      height: 150px;
+      margin-bottom: 10px;
+      border: none;
+    }
+    .lanjut, .pilihan button {
+      margin-top: 10px;
+      font-size: 18px;
+      background-color: white;
+      color: #1a1a40;
+      padding: 8px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .lanjut:hover, .pilihan button:hover {
+      background-color: #e0e0e0;
+    }
+    /* POPUP Style */
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.6);
+      display: none; /* INI YANG PENTING */
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .popup.show {
+      display: flex; /* hanya aktif saat diklik */
+    }
+
+    .popup-content {
+      background-color: white;
+      color: #1a1a40;
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      width: 300px;
+      box-shadow: 0 0 20px white;
+    }
+
+    .popup-content button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: none;
+      background-color: #ffcccc;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SLIDE AWAL -->
+  <div class="container" id="slide-container">
+    <h1>Halo ...🤗🤗</h1>
+    <div class="awal">
+      <iframe src="https://giphy.com/embed/hqgD6bocRHhEjamBPA" frameborder="0" allowfullscreen></iframe>
+      <p class="lanjut" onclick="lanjutSlide()">Lanjut ➜</p>
+    </div>
+  </div>
+
+  <!-- POPUP -->
+  <div id="popup" class="popup">
+    <div class="popup-content">
+      <p>Ya kok nggak tau isih? 😢<br>Coba ingat-ingat lagi...</p>
+      <button onclick="ulangSlide()">😥 Ulang</button>
+    </div>
+  </div>
+  <script>
+    function lanjutSlide() {
+      const container = document.getElementById("slide-container");
+      container.innerHTML = `
+        <h1>Apakah kamu tau hari ini hari apa?</h1>
+        <div class="awal">
+          <iframe src="https://giphy.com/embed/xUPGcguWZHRC2HyBRS" frameborder="0" allowfullscreen></iframe>
+          <div class="pilihan">
+            <button onclick="jawabanIya()">Iya</button>
+            <button onclick="showPopup()">Tidak</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function showPopup() {
+      document.getElementById("popup").classList.add("show");
+    }
+
+    function ulangSlide() {
+      document.getElementById("popup").classList.remove("show");
+      lanjutSlide();
+    }
+
+    function jawabanIya() {
+      alert("Yaaa kamu tahu! 🥰");
+    }
+  </script>
+</body>
+</html>

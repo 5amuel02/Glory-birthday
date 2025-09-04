@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Selamat Ulang Tahun Glo 🌟</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: 'Quicksand', sans-serif;
+      background-color: #000;
+      color: white;
+      overflow: hidden;
+    }
+
+    #start-screen {
+      position: fixed;
+      inset: 0;
+      background: black;
+      color: white;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 1em;
+      text-align: center;
+    }
+
+    #start-screen button {
+      background-color: #ff5ec2;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1.2em;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .slider {
+      display: flex;
+      transition: transform 1s ease-in-out;
+      width: 600vw;
+      height: 100vh;
+    }
+
+    .slide {
+      min-width: 100vw;
+      height: 100vh;
+      padding: 2em;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-size: cover;
+      background-position: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .slide1 { background-image: url('img/bg5.png'); }
+    .slide2 { background-image: url('img/bg4.png'); }
+    .slide3 { background-image: url('img/bg6.png'); }
+    .slide4 { background-image: url('img/bg9.png'); }
+    .slide5 { background-image: url('img/bg8.png'); }
+    .slide6 { background-image: url('img/bg10.png'); }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 0.5em;
+    }
+
+    p {
+      font-size: 1.3em;
+      max-width: 80%;
+      line-height: 1.6;
+    }
+
+    button {
+      margin-top: 2em;
+      background-color: #ff5ec2;
+      border: none;
+      padding: 12px 24px;
+      color: white;
+      font-size: 1em;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .nav-btn {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1em;
+      z-index: 10;
+    }
+
+    .nav-btn button {
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 1px solid white;
+    }
+
+    img.profile {
+      max-width: 200px;
+      border-radius: 20px;
+      margin-top: 20px;
+    }
+
+    .caption {
+      margin-top: 1em;
+      font-size: 1em;
+      color: #ccc;
+    }
+
+    canvas#fireworks {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 999;
+      pointer-events: none;
+      display: none;
+    }
+
+    .snow::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://i.imgur.com/3f3q8Mf.gif');
+      background-size: cover;
+      opacity: 0.2;
+      pointer-events: none;
+    }
+
+    .top-text {
+      position: relative;
+      top: -80px;
+      text-shadow: 2px 2px 4px black;
+    }
+
+    .slide3 h1, .slide3 p,
+    .slide4 h1, .slide4 p {
+      text-shadow: 2px 2px 6px black;
+      animation: blink-slow 3s infinite;
+    }
+    @font-face {
+      font-family: 'Bakso Sapi';
+      src: url('BaksoSapi.ttf') format('truetype');
+    }
+    .slide5 p , .slide5 h1{
+      color: black;
+      font-family: 'Bakso Sapi', cursive;
+      text-shadow: 0px 0px 10px white;
+    }
+    .slide6 {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 3em;
+      overflow-y: auto;  /* penting: biar bisa scroll kalau teks panjang */
+      text-align: left;
+    }
+
+    .slide6 h1 {
+      font-size: 2.2em;
+      margin-bottom: 1em;
+      text-align: center;
+    }
+
+    .slide6 p {
+      font-size: 1.2em;
+      line-height: 1.8;
+      max-width: 800px;
+      white-space: pre-line; /* biar enter di HTML dihitung sebagai baris baru */
+    }
+    .final-message-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      max-width: 80%;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .scroll-box {
+      max-height: 300px; /* tinggi box scroll */
+      overflow-y: auto;
+      margin-top: 1em;
+      padding: 1em;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4px);
+      animation: fadeUp 1.5s ease forwards;
+      opacity: 0;
+    }
+
+    /* biar scroll bar nya cantik */
+    .scroll-box::-webkit-scrollbar {
+      width: 8px;
+    }
+    .scroll-box::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .scroll-box::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.4);
+      border-radius: 10px;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+
+    @keyframes blink-slow {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    .shooting-stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .shooting-stars .star {
+      position: absolute;
+      top: -10%;
+      width: 0px;
+      height: 100px;
+      background: white;
+      opacity: 0.8;
+      transform: rotate(45deg);
+      animation: fall 1s linear infinite;
+    }
+
+    .shooting-stars .star:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .shooting-stars .star:nth-child(2) { left: 25%; animation-delay: 0.5s; }
+    .shooting-stars .star:nth-child(3) { left: 40%; animation-delay: 1s; }
+    .shooting-stars .star:nth-child(4) { left: 55%; animation-delay: 1.5s; }
+    .shooting-stars .star:nth-child(5) { left: 70%; animation-delay: 2s; }
+    .shooting-stars .star:nth-child(6) { left: 85%; animation-delay: 2.5s; }
+    .shooting-stars .star:nth-child(7) { left: 95%; animation-delay: 3s; }
+
+    @keyframes fall {
+      0% { top: -10%; opacity: 1; }
+      100% { top: 110%; opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Start Screen -->
+  <div id="start-screen">
+    <h1>✨ Selamat Datang ✨</h1>
+    <p>Tekan tombol di bawah ini untuk mulai 🎶</p>
+    <button onclick="startWebsite()">Mulai 🎵</button>
+  </div>
+
+  <!-- Audio -->
+  <audio id="bgm" src="https://www.bensound.com/bensound-music/bensound-sunny.mp3" loop></audio>
+  <audio id="boom" src="https://www.soundjay.com/explosion/explosion-01.mp3" preload="auto"></audio>
+
+  <!-- Slider -->
+  <div id="slider" class="slider">
+    <section class="slide slide1">
+      <div class="text-wrapper top-text">
+        <h1 id="judul-slide1">Jam 00.00 langit berubah... kenapa ya?</h1>
+        <div class="button-group">
+          <button onclick="jawabanIya()">Iya</button>
+          <button onclick="jawabanTidak()">Enggak</button>
+        </div>
+      </div>  
+    </section>
+
+    <section class="slide slide2">
+      <div class="shooting-stars">
+        <div class="star">🌠</div><div class="star">🌠</div><div class="star">🌠</div>
+        <div class="star">🌠</div><div class="star">🌠</div><div class="star">🌠</div><div class="star">🌠</div>
+      </div>
+      <h1 data-typing="Selamat Ulang Tahun Gloria teman ayam 🐣"></h1>
+      <p data-typing="Semoga segala harapanmu datang satu per satu... seperti bintang jatuh yang baik hati 💫"></p>
+      <p data-typing="Semoga tahun depan kita bisa ketemu ya 🥹 Aku ga sabar menunggu hari itu 🥰"></p>
+    </section>
+
+    <section class="slide slide3">
+      <div class="text-wrapper">
+        <h1 data-typing="Venus & Kamu 🌟"></h1>
+        <p data-typing="Kamu suka Venus... Tapi kamu lebih bersinar dari planet mana pun."></p>
+        <p data-typing="Boleh gak... aku jadi alien dari Bumi yang nemenin kamu di orbit bahagia? 🚀"></p>
+      </div>
+    </section>
+
+    <section class="slide slide4">
+      <h1 data-typing="Surprise buat Glo 💕"></h1>
+      <p data-typing="Semoga kamu selalu bahagia dan tetap bersinar kayak Venus 🌟"></p>
+      <button onclick="showSurprise()">Klik aku, Glo 💫</button>
+      <canvas id="fireworks"></canvas>
+      <div id="wish-container"></div>
+    </section>
+
+    <section class="slide slide5">
+      <h1 data-typing="Terakhir..."></h1>
+      <p data-typing="Website ini mungkin sederhana..."></p>
+      <p data-typing="...tapi dikirim tepat di jam 00.00 cuma buat kamu."></p>
+      <img class="profile" src="img/profil.png" alt="Foto Ganti">
+      <p class="caption">sory ya ga ada foto mu :(</p>
+      <div class="snow"></div>
+    </section>
+
+    <section class="slide slide6">
+      <div class="final-message-box">
+        <h1>Pesan Terakhir Buat Kamu 💌</h1>
+        <div class="scroll-box">
+          <p>
+            Sudah lebih dari dua tahun sejak kita mulai chat, dan jujur aku gak pernah nyangka bisa kenal sedekat ini sama kamu. Entah kenapa ya, tiap kali ngobrol sama kamu rasanya beda aja—kalau ada apa-apa aku lebih nyaman cerita ke kamu dibanding ke orang lain. Hehe, gak tau kenapa juga, tapi ya begitu lah 😆.
+
+            Oh iya, kemarin kamu menang lomba kan? Aku bangga banget sama kamu! Dari awal aku yakin kamu pasti bisa, dan ternyata bener. Jangan lupa, kita masih punya tantangan: siapa yang sidang duluan 👽👾. Walaupun, kalau jujur sih… aku udah tau kamu yang bakal menang. Soalnya kamu selalu jadi yang terdepan.
+
+            Selamat ulang tahun ya, Glo! 🎉 Hari ini mungkin cuma lewat sebentar, tapi aku berharap kenangan ini bisa bertahan lama. Kamu itu bener-bener spesial, lebih dari yang bisa aku ungkapin lewat kata-kata.
+
+            Semoga setiap langkahmu selalu dipenuhi kebahagiaan, doa yang baik, dan cinta dari orang-orang di sekitarmu. Jangan lupa, aku selalu ada buat dukung kamu, apapun yang terjadi. Teruslah bersinar, karena dunia ini jauh lebih indah dengan kamu di dalamnya ✨.
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+  </div>
+
+  <!-- Navigasi -->
+  <div class="nav-btn">
+    <button onclick="prevSlide()">⬅</button>
+    <button onclick="nextSlide()">➡</button>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const totalSlides = document.querySelectorAll('.slide').length;
+    const slider = document.getElementById('slider');
+
+    function updateSlide() {
+      slider.style.transform = `translateX(-${currentSlide * 100}vw)`;  
+      runTypewriter(currentSlide);
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function tanyaMauKetemu() {
+      Swal.fire({
+        title: 'Kamu mau gak jumpa sama aku? 🥹',
+        showDenyButton: true,
+        confirmButtonText: 'Mau 😄',
+        denyButtonText: 'Enggak 😢',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire('Yey 😄', 'Aku juga ga sabar 😭', 'success');
+        } else if (result.isDenied) {
+          Swal.fire({
+            title: 'Kenapa? 😭',
+            input: 'text',
+            inputPlaceholder: 'Tulis alasannya di sini...',
+            confirmButtonText: 'Kirim',
+            showCancelButton: true,
+          }).then((res) => {
+            if (res.isConfirmed) {
+              Swal.fire('Makasih udah jujur 😌', 'Semoga suatu saat berubah pikiran ya...', 'info');
+            }
+          });
+        }
+      });
+    }
+
+    function runTypewriter(slideIndex) {
+      const slide = document.querySelectorAll('.slide')[slideIndex];
+      const targets = slide.querySelectorAll('[data-typing]');
+      targets.forEach(el => {
+        const fullText = el.getAttribute('data-typing');
+        el.textContent = '';
+        let i = 0;
+        const interval = setInterval(() => {
+          el.textContent += fullText[i];
+          i++;
+          if (i >= fullText.length) clearInterval(interval);
+        }, 40);
+      });
+
+      //if (slideIndex === 1) { 
+        //setTimeout(tanyaMauKetemu, 5000);
+      //}
+    }
+
+    function showSurprise() {
+      const canvas = document.getElementById('fireworks');
+      canvas.style.display = "block";
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const boom = document.getElementById('boom');
+      let ctx = canvas.getContext('2d');
+      let fireworks = [];
+
+      class Firework {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = canvas.height;
+          this.targetY = Math.random() * canvas.height / 2;
+          this.color = `hsl(${Math.random() * 360}, 100%, 60%)`;
+          this.exploded = false;
+          this.particles = [];
+        }
+        update() {
+          if (!this.exploded) {
+            this.y -= 6;
+            if (this.y <= this.targetY) {
+              this.exploded = true;
+              this.explode();
+              boom.currentTime = 0;
+              boom.play();
+            }
+          }
+          this.particles.forEach(p => p.update());
+          this.particles = this.particles.filter(p => p.alpha > 0);
+        }
+        draw() {
+          if (!this.exploded) {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+          }
+          this.particles.forEach(p => p.draw());
+        }
+        explode() {
+          for (let i = 0; i < 200; i++) {
+            this.particles.push(new Particle(this.x, this.y, this.color));
+          }
+        }
+      }
+
+      class Particle {
+        constructor(x, y, color) {
+          this.x = x;
+          this.y = y;
+          this.vx = (Math.random() - 0.5) * 10;
+          this.vy = (Math.random() - 0.5) * 10;
+          this.alpha = 1;
+          this.color = color;
+        }
+        update() {
+          this.x += this.vx;
+          this.y += this.vy;
+          this.alpha -= 0.01;
+        }
+        draw() {
+          ctx.globalAlpha = this.alpha;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+          ctx.fillStyle = this.color;
+          ctx.fill();
+          ctx.globalAlpha = 1;
+        }
+      }
+
+      function launchFirework() {
+        fireworks.push(new Firework());
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        fireworks.forEach(fw => {
+          fw.update();
+          fw.draw();
+        });
+        fireworks = fireworks.filter(fw => !fw.exploded || fw.particles.length > 0);
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+      setInterval(launchFirework, 600);
+
+      setTimeout(() => {
+        Swal.fire({
+          title: '✨ Ulang Tahunmu ✨',
+          text: 'Masukkan keinginan kamu di ulang tahun ini 😊',
+          input: 'text',
+          inputPlaceholder: 'Aku pengen...',
+          confirmButtonText: 'Kirim',
+          showCancelButton: true,
+        }).then(result => {
+          if (result.isConfirmed && result.value) {
+            Swal.fire('Terkirim!', 'Semoga harapanmu terkabul ya 💖', 'success');
+          }
+        });
+      }, 2000);
+    }
+
+    function jawabanIya() {
+      Swal.fire({
+        title: "Kenapa tuh?",
+        input: "text",
+        inputPlaceholder: "Coba jawab...",
+        showCancelButton: true,
+        confirmButtonText: "Jawab",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const jawaban = result.value.toLowerCase();
+          if (jawaban.includes("ulang tahun") || jawaban.includes("glo")) {
+            Swal.fire({ title: "Yess kamu benar! 🎉", confirmButtonText: "Lanjut" }).then(() => nextSlide());
+          } else {
+            Swal.fire({
+              title: "Yahh salah 😅",
+              text: "Mau tau gak alasannya kenapa?",
+              showCancelButton: true,
+              confirmButtonText: "MAU"
+            }).then((r) => {
+              if (r.isConfirmed) nextSlide();
+            });
+          }
+        }
+      });
+    }
+
+    function jawabanTidak() {
+      Swal.fire({
+        title: "Yahhh kok ga inget sih 😭",
+        text: "Coba jawab ulang ya!",
+        confirmButtonText: "Balik ke awal"
+      }).then(() => {
+        currentSlide = 0;
+        updateSlide();
+      });
+    }
+
+    function startWebsite() {
+      document.getElementById('start-screen').style.display = 'none';
+      document.getElementById('bgm').play();
+      runTypewriter(0);
+    }
+  </script>
+</body>
+</html>
