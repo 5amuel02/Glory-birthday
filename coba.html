@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Selamat Ulang Tahun</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Selamat Ulang Tahun Glo 🌟</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     * {
       margin: 0;
@@ -11,135 +13,730 @@
       box-sizing: border-box;
     }
 
-    body {
-      background-color: #1a1a40;
-      background-image: url('img/bg.png');
-      background-size: cover;
-      background-position: center;
-      height: 100vh;
-      font-family: sans-serif;
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: 'Quicksand', sans-serif;
+      background-color: #000;
       color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      overflow: hidden;
     }
 
-    .container {
-      text-align: center;
-    }
-    .awal {
+    #start-screen {
+      position: fixed;
+      inset: 0;
+      background: black;
+      color: white;
+      z-index: 100;
       display: flex;
       flex-direction: column;
+      justify-content: center;
       align-items: center;
-      border: 5px solid white;
-      padding: 20px;
-      background-color: rgba(0,0,0,0.5);
+      gap: 1em;
+      text-align: center;
+    }
+
+    #start-screen button {
+      background-color: #ff5ec2;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1.2em;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .slider {
+      display: flex;
+      transition: transform 1s ease-in-out;
+      width: 600vw;
+      height: 100vh;
+    }
+
+    .slide {
+      min-width: 100vw;
+      height: 100vh;
+      padding: 2em;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-size: cover;
+      background-position: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .slide1 { background-image: url('img/bg5.png'); }
+    .slide2 { background-image: url('img/bg4.png'); }
+    .slide3 { background-image: url('img/bg6.png'); }
+    .slide4 { background-image: url('img/bg9.png'); }
+    .slide5 { background-image: url('img/bg8.png'); }
+    .slide6 { background-image: url('img/bg11.png'); }
+    .slide7 { background-image: url('img/bg10.png'); }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 0.5em;
+    }
+
+    p {
+      font-size: 1.3em;
+      max-width: 80%;
+      line-height: 1.6;
+    }
+
+    button {
+      margin-top: 2em;
+      background-color: #ff5ec2;
+      border: none;
+      padding: 12px 24px;
+      color: white;
+      font-size: 1em;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .nav-btn {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1em;
+      z-index: 10;
+    }
+
+    .nav-btn button {
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 1px solid white;
+    }
+
+    img.profile {
+      max-width: 200px;
       border-radius: 20px;
       margin-top: 20px;
     }
-    .awal iframe {
-      width: 150px;
-      height: 150px;
-      margin-bottom: 10px;
-      border: none;
+
+    .caption {
+      margin-top: 1em;
+      font-size: 1em;
+      color: #ccc;
     }
-    .lanjut, .pilihan button {
-      margin-top: 10px;
-      font-size: 18px;
-      background-color: white;
-      color: #1a1a40;
-      padding: 8px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    .lanjut:hover, .pilihan button:hover {
-      background-color: #e0e0e0;
-    }
-    /* POPUP Style */
-    .popup {
-      position: fixed;
+
+    canvas#fireworks {
+      position: absolute;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background-color: rgba(0, 0, 0, 0.6);
-      display: none; /* INI YANG PENTING */
-      justify-content: center;
-      align-items: center;
       z-index: 999;
+      pointer-events: none;
+      display: none;
     }
 
-    .popup.show {
-      display: flex; /* hanya aktif saat diklik */
+    .snow::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://i.imgur.com/3f3q8Mf.gif');
+      background-size: cover;
+      opacity: 0.2;
+      pointer-events: none;
     }
 
-    .popup-content {
-      background-color: white;
-      color: #1a1a40;
-      padding: 30px;
-      border-radius: 20px;
+    .top-text {
+      position: relative;
+      top: -80px;
+      text-shadow: 2px 2px 4px black;
+    }
+
+    .slide3 h1, .slide3 p,
+    .slide4 h1, .slide4 p {
+      text-shadow: 2px 2px 6px black;
+      animation: blink-slow 3s infinite;
+    }
+    .spesial{
+      color: #000;
+    }
+    @font-face {
+      font-family: 'Bakso Sapi';
+      src: url('BaksoSapi.ttf') format('truetype');
+    }
+    .slide5 p , .slide5 h1{
+      color: black;
+      font-family: 'Bakso Sapi', cursive;
+      text-shadow: 0px 0px 10px white;
+    }
+    .slide6 {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 3em;
+      overflow-y: auto;  /* penting: biar bisa scroll kalau teks panjang */
+      text-align: left;
+    }
+
+    .slide6 h1 {
+      font-size: 2.2em;
+      margin-bottom: 1em;
       text-align: center;
-      width: 300px;
-      box-shadow: 0 0 20px white;
     }
 
-    .popup-content button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      border: none;
-      background-color: #ffcccc;
+    .slide6 p {
+      font-size: 1.2em;
+      line-height: 1.8;
+      max-width: 800px;
+      white-space: pre-line; /* biar enter di HTML dihitung sebagai baris baru */
+    }
+    .final-message-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      max-width: 80%;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .scroll-box {
+      display: flex;
+      justify-content: center;
+      max-height: 300px; /* tinggi box scroll */
+      overflow-y: auto;
+      margin-top: 1em;
+      padding: 1em;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4px);
+      animation: fadeUp 1.5s ease forwards;
+      opacity: 0;
+    }
+    .scroll-box::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */        
+    }
+
+    /* biar scroll bar nya cantik */
+    .scroll-box::-webkit-scrollbar {
+      width: 8px;
+    }
+    .scroll-box::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .scroll-box::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.4);
       border-radius: 10px;
-      font-size: 16px;
-      cursor: pointer;
+    }
+
+    @keyframes fadeSlide {
+      0% { opacity: 0; transform: translateY(30px); }
+      20% { opacity: 1; transform: translateY(0); }
+      80% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-30px); }
+    }
+
+    .photo-gallery img {
+      width: 160px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+      opacity: 0;
+      animation: fadeSlide 6s ease-in-out infinite;
+      margin: 20px;
+    }
+
+    /* Biar animasinya tidak serentak, kasih delay berbeda */
+    .photo-gallery img:nth-child(1) { animation-delay: 0s; }
+    .photo-gallery img:nth-child(2) { animation-delay: 1s; }
+    .photo-gallery img:nth-child(3) { animation-delay: 2s; }
+    .photo-gallery img:nth-child(4) { animation-delay: 3s; }
+    .photo-gallery img:nth-child(5) { animation-delay: 4s; }
+
+
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+
+    @keyframes blink-slow {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    .shooting-stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .shooting-stars .star {
+      position: absolute;
+      top: -10%;
+      width: 0px;
+      height: 100px;
+      background: white;
+      opacity: 0.8;
+      transform: rotate(45deg);
+      animation: fall 1s linear infinite;
+    }
+
+    .shooting-stars .star:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .shooting-stars .star:nth-child(2) { left: 25%; animation-delay: 0.5s; }
+    .shooting-stars .star:nth-child(3) { left: 40%; animation-delay: 1s; }
+    .shooting-stars .star:nth-child(4) { left: 55%; animation-delay: 1.5s; }
+    .shooting-stars .star:nth-child(5) { left: 70%; animation-delay: 2s; }
+    .shooting-stars .star:nth-child(6) { left: 85%; animation-delay: 2.5s; }
+    .shooting-stars .star:nth-child(7) { left: 95%; animation-delay: 3s; }
+
+    @keyframes fall {
+      0% { top: -10%; opacity: 1; }
+      100% { top: 110%; opacity: 0; }
+    }
+    .cake {
+      position: relative;
+      width: 500px;
+      height: 200px;
+      background-image: url(img/kue.png);
+      background-size: contain;
+      border-radius: 10px;
+      margin-top: 350px;
+    }
+
+    .candle {
+      position: absolute;
+      top: -70px;
+      width: 30px;
+      height: 100px;
+      background: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    }
+
+    .flame {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 45px;
+      background: radial-gradient(circle at 50% 50%, #ffeb3b, #ff9800);
+      border-radius: 50%;
+      display: none;
+      animation: flicker 0.2s infinite alternate;
+      box-shadow: 0 0 20px rgba(255, 193, 7, 0.8);
+    }
+    .cakeglo{
+      color: black;
+    }
+
+    @keyframes flicker {
+      from { transform: translateX(-50%) scale(1); opacity: 0.9; }
+      to { transform: translateX(-50%) scale(1.1); opacity: 1; }
     }
   </style>
 </head>
 <body>
 
-  <!-- SLIDE AWAL -->
-  <div class="container" id="slide-container">
-    <h1>Halo ...🤗🤗</h1>
-    <div class="awal">
-      <iframe src="https://giphy.com/embed/hqgD6bocRHhEjamBPA" frameborder="0" allowfullscreen></iframe>
-      <p class="lanjut" onclick="lanjutSlide()">Lanjut ➜</p>
-    </div>
+  <!-- Start Screen -->
+  <div id="start-screen">
+    <h1>✨ Selamat Datang ✨</h1>
+    <p>Tekan tombol di bawah ini untuk mulai 🎶</p>
+    <button onclick="startWebsite()">Mulai 🎵</button>
   </div>
 
-  <!-- POPUP -->
-  <div id="popup" class="popup">
-    <div class="popup-content">
-      <p>Ya kok nggak tau isih? 😢<br>Coba ingat-ingat lagi...</p>
-      <button onclick="ulangSlide()">😥 Ulang</button>
-    </div>
-  </div>
-  <script>
-    function lanjutSlide() {
-      const container = document.getElementById("slide-container");
-      container.innerHTML = `
-        <h1>Apakah kamu tau hari ini hari apa?</h1>
-        <div class="awal">
-          <iframe src="https://giphy.com/embed/xUPGcguWZHRC2HyBRS" frameborder="0" allowfullscreen></iframe>
-          <div class="pilihan">
-            <button onclick="jawabanIya()">Iya</button>
-            <button onclick="showPopup()">Tidak</button>
-          </div>
+  <!-- Audio -->
+  <audio id="bgm" src="audio/bgs.mp3" loop></audio>
+  <audio id="boom" src="https://www.soundjay.com/explosion/explosion-01.mp3" preload="auto"></audio>
+
+  <!-- Slider -->
+  <div id="slider" class="slider">
+    <section class="slide slide1">
+      <div class="text-wrapper top-text">
+        <h1 id="judul-slide1">Jam 00.00 langit berubah... kenapa ya?</h1>
+        <div class="button-group">
+          <button onclick="jawabanIya()">Iya</button>
+          <button onclick="jawabanTidak()">Enggak</button>
         </div>
-      `;
+      </div>  
+    </section>
+
+    <section class="slide slide2">
+      <div class="shooting-stars">
+        <div class="star">🌠</div><div class="star">🌠</div><div class="star">🌠</div>
+        <div class="star">🌠</div><div class="star">🌠</div><div class="star">🌠</div><div class="star">🌠</div>
+      </div>
+      <h1 data-typing="Selamat Ulang Tahun Gloria teman ayam 🐣"></h1>
+      <p data-typing="Semoga segala harapanmu datang satu per satu... seperti bintang jatuh yang baik hati 💫. Tahun depan kita jumpa atau enggak ya? melihat deh 😁"></p>
+    </section>
+
+    <section class="slide slide3">
+      <div class="text-wrapper">
+        <h1 data-typing="Venus & Kamu 🌟"></h1>
+        <p class="spesial" data-typing="Kamu suka Venus… tapi jujur aja, menurutku kamu jauh lebih bercahaya dari Venus itu sendiri. Boleh kali ya aku numpang di orbitmu… biar bisa dapat sedikit cahaya dari kamu?"></p>
+      </div>
+    </section>
+
+    <section class="slide slide4">
+      <h1 data-typing="Surprise buat Glo 💕"></h1>
+      <p data-typing="Semoga kamu selalu bahagia, penuh tawa dan cerita indah. Semoga setiap langkahmu selalu dipenuhi kebaikan dan keberuntungan. Dan semoga kamu terus bersinar seindah Venus di langit malam, membawa cahaya untuk orang-orang di sekitarmu termasuk aku wkwkwkwk."></p>
+      <button onclick="showSurprise()">Klik Ini, Glo 💫</button>
+      <canvas id="fireworks"></canvas>
+      <div id="wish-container"></div>
+    </section>
+
+    <section class="slide slide5">
+      <h1 data-typing="Terakhir..."></h1>
+      <p data-typing="Website ini mungkin sederhana..."></p>
+      <p data-typing="...tapi dikirim tepat di jam 00.00 cuma buat kamu."></p>
+      <img class="profile" src="img/profil(1).png" alt="Foto Ganti">
+      <p class="caption">Anggap lah ini foto mu, soalnya ga ada fotomu samaku hehe</p>
+      <div class="snow"></div>
+    </section>
+
+    <section class="slide slide6">
+      <h1 class="cakeglo">🎂 Kue Ulang Tahun Untuk Glo 🎂</h1>
+      <div class="cake">
+        <div class="candle" style="left:20%;">
+          <div class="flame"></div>
+        </div>
+        <div class="candle" style="left:35%;">
+          <div class="flame"></div>
+        </div>
+        <div class="candle" style="left:50%;">
+          <div class="flame"></div>
+        </div>
+        <div class="candle" style="left:65%;">
+          <div class="flame"></div>
+        </div>
+        <div class="candle" style="left:80%;">
+          <div class="flame"></div>
+      </div>
+    </div>
+    <button onclick="toggleLilin()">Nyalakan / Matikan Lilin</button>
+    </section>
+    <audio id="happy" src="audio/happy.mp3" preload="auto"></audio>
+
+    <section class="slide slide7">
+      <div class="final-message-box">
+        <h1>Message for you 💌</h1>
+        <div class="scroll-box">
+          <p>
+            Oke aku buat pake bahasa inggris biar kayak keren, (walaupun pake google translate 🤣),<br>
+            It's been more than two years since we started chatting, and honestly I never thought I'd get to know you this well (even though you said you didn't know me yesterday 😌 but oh well). I don't know why, but every time I chat with you, I feel different, whenever I talk to you about something, I feel more comfortable talking to you than to anyone else. Hehe, I don't know why either, but that's how it is 😆.<br>
+
+            Oh yeah, you won the competition yesterday, right? I'm so proud of you! From the start, I was sure you could do it, and it turned out you did. Don't forget, we still have a challenge: who can go to finish first 👽👾. Although, to be honest… I already knew you would win. You're always the first.<br>
+
+            Happy birthday, Glo! 🎉 Today may be fleeting, but I hope these memories last forever. You are truly special, more than words can express.<br>
+
+            May every step you take be filled with happiness, good wishes, and love from those around you. Don't forget, I'm always here to support you, no matter what. Keep shining, because this world is so much more beautiful with you in it ✨.<br>
+
+            Oh yeah, happy birthday from Sirius for Glo too, thank you for giving me the name he said.
+          </p>
+        </div>
+         <div class="photo-gallery">
+          <img src="img/profil(0).png" alt="Foto 1">
+          <img src="img/profil(2).png" alt="Foto 2">
+          <img src="img/profil(3).jpg" alt="Foto 3">
+          <img src="img/profil(4).jpg" alt="Foto 4">
+          <img src="img/profil(5).jpg" alt="Foto 5">
+          <img src="img/profil(6).jpg" alt="Foto 6">
+        </div>
+      </div>
+    </section>
+
+
+  </div>
+
+  <!-- Navigasi -->
+  <div class="nav-btn">
+    <button onclick="prevSlide()">⬅</button>
+    <button onclick="nextSlide()">➡</button>
+  </div>
+  
+
+  <script>
+    let currentSlide = 0;
+    const totalSlides = document.querySelectorAll('.slide').length;
+    const slider = document.getElementById('slider');
+
+    function updateSlide() {
+      slider.style.transform = `translateX(-${currentSlide * 100}vw)`;  
+      runTypewriter(currentSlide);
     }
 
-    function showPopup() {
-      document.getElementById("popup").classList.add("show");
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        currentSlide++;
+        updateSlide();
+      }
     }
 
-    function ulangSlide() {
-      document.getElementById("popup").classList.remove("show");
-      lanjutSlide();
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function tanyaMauKetemu() {
+      Swal.fire({
+        title: 'Kamu mau gak jumpa sama aku? 🥹',
+        showDenyButton: true,
+        confirmButtonText: 'Mau 😄',
+        denyButtonText: 'Enggak 😢',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire('Yey 😄', 'Aku juga ga sabar 😭', 'success');
+        } else if (result.isDenied) {
+          Swal.fire({
+            title: 'Kenapa? 😭',
+            input: 'text',
+            inputPlaceholder: 'Tulis alasannya di sini...',
+            confirmButtonText: 'Kirim',
+            showCancelButton: true,
+          }).then((res) => {
+            if (res.isConfirmed) {
+              Swal.fire('Makasih udah jujur 😌', 'Semoga suatu saat berubah pikiran ya...', 'info');
+            }
+          });
+        }
+      });
+    }
+
+    function runTypewriter(slideIndex) {
+      const slide = document.querySelectorAll('.slide')[slideIndex];
+      const targets = slide.querySelectorAll('[data-typing]');
+      targets.forEach(el => {
+        const fullText = el.getAttribute('data-typing');
+        el.textContent = '';
+        let i = 0;
+        const interval = setInterval(() => {
+          el.textContent += fullText[i];
+          i++;
+          if (i >= fullText.length) clearInterval(interval);
+        }, 40);
+      });
+
+      //if (slideIndex === 1) { 
+        //setTimeout(tanyaMauKetemu, 5000);
+      //}
+    }
+
+    function showSurprise() {
+      const canvas = document.getElementById('fireworks');
+      canvas.style.display = "block";
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const boom = document.getElementById('boom');
+      let ctx = canvas.getContext('2d');
+      let fireworks = [];
+
+      class Firework {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = canvas.height;
+          this.targetY = Math.random() * canvas.height / 2;
+          this.color = `hsl(${Math.random() * 360}, 100%, 60%)`;
+          this.exploded = false;
+          this.particles = [];
+        }
+        update() {
+          if (!this.exploded) {
+            this.y -= 15;
+            if (this.y <= this.targetY) {
+              this.exploded = true;
+              this.explode();
+              boom.currentTime = 0;
+              boom.play();
+            }
+          }
+          this.particles.forEach(p => p.update());
+          this.particles = this.particles.filter(p => p.alpha > 0);
+        }
+        draw() {
+          if (!this.exploded) {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+          }
+          this.particles.forEach(p => p.draw());
+        }
+        explode() {
+          for (let i = 0; i < 400; i++) {
+            this.particles.push(new Particle(this.x, this.y, this.color));
+          }
+        }
+      }
+
+      class Particle {
+        constructor(x, y, color) {
+          this.x = x;
+          this.y = y;
+          this.vx = (Math.random() - 0.5) * 10;
+          this.vy = (Math.random() - 0.5) * 10;
+          this.alpha = 1;
+          this.color = color;
+        }
+        update() {
+          this.x += this.vx;
+          this.y += this.vy;
+          this.alpha -= 0.01;
+        }
+        draw() {
+          ctx.globalAlpha = this.alpha;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+          ctx.fillStyle = this.color;
+          ctx.fill();
+          ctx.globalAlpha = 1;
+        }
+      }
+
+      function launchFirework() {
+        fireworks.push(new Firework());
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        fireworks.forEach(fw => {
+          fw.update();
+          fw.draw();
+        });
+        fireworks = fireworks.filter(fw => !fw.exploded || fw.particles.length > 0);
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+      setInterval(launchFirework, 300);
+
+      setTimeout(() => {
+        Swal.fire({
+          title: '✨ Ulang Tahunmu ✨',
+          text: 'Masukkan keinginan kamu di ulang tahun ini 😊, santai aja aku ga tau, hanya Tuhan sama kamu yang tau',
+          input: 'text',
+          inputPlaceholder: 'Aku pengen...',
+          confirmButtonText: 'Kirim',
+          showCancelButton: true,
+        }).then(result => {
+          if (result.isConfirmed && result.value) {
+            Swal.fire('Terkirim!', 'Semoga harapanmu terkabul ya 💖', 'success');
+          }
+        });
+      }, 2000);
     }
 
     function jawabanIya() {
-      alert("Yaaa kamu tahu! 🥰");
+      Swal.fire({
+        title: "Karna udah ganti hari,eh tapi hari kali ini beda, kenapa ya?",
+        input: "text",
+        inputPlaceholder: "Coba jawab...",
+        showCancelButton: true,
+        confirmButtonText: "Jawab",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const jawaban = result.value.toLowerCase();
+          if (jawaban.includes("ulang tahun") || jawaban.includes("glo")) {
+            Swal.fire({ title: "Yess kamu benar! 🎉", confirmButtonText: "Lanjut" }).then(() => nextSlide());
+          } else {
+            Swal.fire({
+              title: "Yahh salah 😅",
+              text: "Mau tau gak alasannya kenapa?",
+              showCancelButton: true,
+              confirmButtonText: "MAU"
+            }).then((r) => {
+              if (r.isConfirmed) nextSlide();
+            });
+          }
+        }
+      });
     }
+
+    function jawabanTidak() {
+      Swal.fire({
+        title: "Yahhh kok ga inget sih 😭",
+        text: "Coba jawab ulang ya!",
+        confirmButtonText: "Balik ke awal"
+      }).then(() => {
+        currentSlide = 0;
+        updateSlide();
+      });
+    }
+
+    function startWebsite() {
+      document.getElementById('start-screen').style.display = 'none';
+      document.getElementById('bgm').play();
+      runTypewriter(0);
+    }
+    function toggleLilin() {
+      const flames = document.querySelectorAll(".flame");
+      const bgm = document.getElementById("bgm");
+      const happy = document.getElementById("happy");
+
+      // cek apakah lilin sudah menyala (ada yang display block)
+      let adaMenyala = false;
+      flames.forEach(f => {
+        if (f.style.display === "block") {
+          adaMenyala = true;
+        }
+      });
+
+      if (!adaMenyala) {
+        // artinya belum menyala → kita nyalakan dan ganti lagu
+        flames.forEach(f => { f.style.display = "block"; });
+        // stop bgm
+        if (bgm) {
+          bgm.pause();
+          bgm.currentTime = 0;
+        }
+        // play happy
+        if (happy) {
+          happy.play();
+        }
+      } else {
+        // arti sudah menyala → matikan lilin & kembali ke bgm
+        flames.forEach(f => { f.style.display = "none"; });
+        if (happy) {
+          happy.pause();
+          happy.currentTime = 0;
+        }
+        if (bgm) {
+          bgm.play();
+        }
+      }
+    }
+
+
   </script>
 </body>
 </html>

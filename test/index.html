@@ -1,161 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Fireworks Party</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kue Ulang Tahun</title>
   <style>
     body {
-      margin: 0;
-      overflow: hidden;
+      background: linear-gradient(to bottom, #ffe0f0, #ffb6c1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
       height: 100vh;
-      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      flex-direction: column;
+      font-family: 'Poppins', sans-serif;
     }
-    canvas {
-      display: block;
+
+    h1 {
+      color: #fff;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+      margin-bottom: 20px;
     }
-    #launchBtn {
+
+    .cake {
+      position: relative;
+      width: 500px;
+      height: 450px;
+      background: #ff69b4;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+
+    .candle {
       position: absolute;
-      top: 20px;
+      top: -100px;
+      width: 30px;
+      height: 100px;
+      background: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    }
+
+    .flame {
+      position: absolute;
+      top: -20px;
       left: 50%;
       transform: translateX(-50%);
-      padding: 12px 25px;
-      background: #ff0080;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 18px;
-      cursor: pointer;
-      z-index: 10;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
-    #message {
-      position: absolute;
-      top: 40%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 64px;
-      font-weight: bold;
-      color: gold;
-      text-shadow: 2px 2px 5px #000;
+      width: 30px;
+      height: 45px;
+      background: radial-gradient(circle at 50% 50%, #ffeb3b, #ff9800);
+      border-radius: 50%;
       display: none;
-      z-index: 20;
-      animation: glow 1s infinite alternate;
+      animation: flicker 0.2s infinite alternate;
+      box-shadow: 0 0 20px rgba(255, 193, 7, 0.8);
     }
-    @keyframes glow {
-      from { text-shadow: 0 0 10px gold, 0 0 20px orange; }
-      to { text-shadow: 0 0 20px yellow, 0 0 30px red; }
+
+    @keyframes flicker {
+      from { transform: translateX(-50%) scale(1); opacity: 0.9; }
+      to { transform: translateX(-50%) scale(1.1); opacity: 1; }
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 10px 20px;
+      background: #ff4081;
+      border: none;
+      border-radius: 20px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #e91e63;
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
-  <button id="launchBtn">🚀 Launch Fireworks</button>
-  <div id="message">🎉 Happy Birthday 🎂</div>
-  <canvas id="canvas"></canvas>
-
-  <!-- Suara ledakan (lebih jelas) -->
-  <audio id="boomSound" src="https://actions.google.com/sounds/v1/explosions/explosion.ogg"></audio>
+  <div class="cake">
+        <div class="candle" style="left:20%;">
+          <div class="flame"></div>
+        </div>
+        <div class="candle" style="left:35%;">
+          <div class="flame"></div>
+        </div>
+        <div class="candle" style="left:50%;">
+          <div class="flame"></div>
+        </div>
+        <div class="candle" style="left:65%;">
+          <div class="flame"></div>
+        </div>
+        <div class="candle" style="left:80%;">
+          <div class="flame"></div>
+      </div>
+    </div>
+  <button onclick="nyalakanLilin()">Nyalakan Lilin</button>
 
   <script>
-    const canvas = document.getElementById("canvas");
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const fireworks = [];
-    let autoLaunch = false;
-    let clickCount = 0;
-    const message = document.getElementById("message");
-
-    class Particle {
-      constructor(x, y, color) {
-        this.x = x;
-        this.y = y;
-        this.vx = (Math.random() - 0.5) * 10;
-        this.vy = (Math.random() - 0.5) * 10;
-        this.alpha = 1;
-        this.color = color;
-      }
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-        this.alpha -= 0.02;
-      }
-      draw() {
-        ctx.globalAlpha = this.alpha;
-        ctx.fillStyle = this.color;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.globalAlpha = 1;
-      }
+    function nyalakanLilin() {
+      const flame = document.getElementById("flame");
+      flame.style.display = "block";
     }
-
-    class Firework {
-      constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.particles = [];
-        this.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
-        this.exploded = false;
-      }
-      explode() {
-        for (let i = 0; i < 100; i++) {
-          this.particles.push(new Particle(this.x, this.y, this.color));
-        }
-        this.exploded = true;
-
-        // 🔊 mainkan suara untuk setiap ledakan
-        const sound = document.getElementById("boomSound").cloneNode();
-        sound.volume = 0.4;
-        sound.play();
-      }
-      update() {
-        if (!this.exploded) {
-          this.explode();
-        }
-        this.particles.forEach((p, index) => {
-          p.update();
-          p.draw();
-          if (p.alpha <= 0) {
-            this.particles.splice(index, 1);
-          }
-        });
-      }
-    }
-
-    function animate() {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      fireworks.forEach((fw, index) => {
-        fw.update();
-        if (fw.exploded && fw.particles.length === 0) {
-          fireworks.splice(index, 1);
-        }
-      });
-
-      requestAnimationFrame(animate);
-    }
-
-    document.getElementById("launchBtn").addEventListener("click", () => {
-      autoLaunch = true;
-      clickCount++;
-
-      if (clickCount >= 10) {
-        message.style.display = "block";
-      }
-
-      // terus menerus meluncurkan petasan
-      setInterval(() => {
-        if (autoLaunch) {
-          const x = Math.random() * canvas.width;
-          const y = Math.random() * (canvas.height / 2);
-          fireworks.push(new Firework(x, y));
-        }
-      }, 700);
-    });
-
-    animate();
   </script>
 </body>
 </html>

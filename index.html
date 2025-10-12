@@ -72,7 +72,8 @@
     .slide3 { background-image: url('img/bg6.png'); }
     .slide4 { background-image: url('img/bg9.png'); }
     .slide5 { background-image: url('img/bg8.png'); }
-    .slide6 { background-image: url('img/bg10.png'); }
+    .slide6 { background-image: url('img/bg11.png'); }
+    .slide7 { background-image: url('img/bg10.png'); }
 
     h1 {
       font-size: 2.5em;
@@ -158,12 +159,16 @@
       text-shadow: 2px 2px 6px black;
       animation: blink-slow 3s infinite;
     }
+    .spesial{
+      color: #000;
+      margin: 0 auto;
+    }
     @font-face {
       font-family: 'Bakso Sapi';
       src: url('BaksoSapi.ttf') format('truetype');
     }
     .slide5 p , .slide5 h1{
-      color: black;
+      color: white;
       font-family: 'Bakso Sapi', cursive;
       text-shadow: 0px 0px 10px white;
     }
@@ -200,6 +205,8 @@
     }
 
     .scroll-box {
+      display: flex;
+      justify-content: center;
       max-height: 300px; /* tinggi box scroll */
       overflow-y: auto;
       margin-top: 1em;
@@ -210,6 +217,9 @@
       backdrop-filter: blur(4px);
       animation: fadeUp 1.5s ease forwards;
       opacity: 0;
+    }
+    .scroll-box::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */        
     }
 
     /* biar scroll bar nya cantik */
@@ -223,6 +233,33 @@
       background: rgba(255,255,255,0.4);
       border-radius: 10px;
     }
+
+    @keyframes fadeSlide {
+      0% { opacity: 0; transform: translateY(30px); }
+      20% { opacity: 1; transform: translateY(0); }
+      80% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-30px); }
+    }
+
+    .photo-gallery img {
+      width: 160px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+      opacity: 0;
+      animation: fadeSlide 6s ease-in-out infinite;
+      margin: 20px;
+    }
+
+    /* Biar animasinya tidak serentak, kasih delay berbeda */
+    .photo-gallery img:nth-child(1) { animation-delay: 0s; }
+    .photo-gallery img:nth-child(2) { animation-delay: 1s; }
+    .photo-gallery img:nth-child(3) { animation-delay: 2s; }
+    .photo-gallery img:nth-child(4) { animation-delay: 3s; }
+    .photo-gallery img:nth-child(5) { animation-delay: 4s; }
+
+
 
     @keyframes fadeUp {
       from {
@@ -285,6 +322,47 @@
       0% { top: -10%; opacity: 1; }
       100% { top: 110%; opacity: 0; }
     }
+    .cake {
+      position: relative;
+      width: 500px;
+      height: 200px;
+      background-image: url(img/kue.png);
+      background-size: contain;
+      border-radius: 10px;
+      margin-top: 350px;
+    }
+
+    .candle {
+      position: absolute;
+      top: -70px;
+      width: 30px;
+      height: 100px;
+      background: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    }
+
+    .flame {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 45px;
+      background: radial-gradient(circle at 50% 50%, #ffeb3b, #ff9800);
+      border-radius: 50%;
+      display: none;
+      animation: flicker 0.2s infinite alternate;
+      box-shadow: 0 0 20px rgba(255, 193, 7, 0.8);
+    }
+    .cakeglo{
+      color: black;
+    }
+
+    @keyframes flicker {
+      from { transform: translateX(-50%) scale(1); opacity: 0.9; }
+      to { transform: translateX(-50%) scale(1.1); opacity: 1; }
+    }
   </style>
 </head>
 <body>
@@ -297,14 +375,14 @@
   </div>
 
   <!-- Audio -->
-  <audio id="bgm" src="https://www.bensound.com/bensound-music/bensound-sunny.mp3" loop></audio>
+  <audio id="bgm" src="audio/bgs.mp3" loop></audio>
   <audio id="boom" src="https://www.soundjay.com/explosion/explosion-01.mp3" preload="auto"></audio>
 
   <!-- Slider -->
   <div id="slider" class="slider">
     <section class="slide slide1">
       <div class="text-wrapper top-text">
-        <h1 id="judul-slide1">Jam 00.00 langit berubah... kenapa ya?</h1>
+        <h1 id="judul-slide1">Jam 00.00 langit berubah..<br>Ya ini dia malam Bulan sama Venus yang ku bilang kemarin kalau glo masih ingat aku datang lagi di malam ini :D<br>Tapi kenapa yaa?</h1>
         <div class="button-group">
           <button onclick="jawabanIya()">Iya</button>
           <button onclick="jawabanTidak()">Enggak</button>
@@ -318,22 +396,20 @@
         <div class="star">🌠</div><div class="star">🌠</div><div class="star">🌠</div><div class="star">🌠</div>
       </div>
       <h1 data-typing="Selamat Ulang Tahun Gloria teman ayam 🐣"></h1>
-      <p data-typing="Semoga segala harapanmu datang satu per satu... seperti bintang jatuh yang baik hati 💫"></p>
-      <p data-typing="Semoga tahun depan kita bisa ketemu ya 🥹 Aku ga sabar menunggu hari itu 🥰"></p>
+      <p data-typing="Semoga segala harapanmu datang satu per satu... seperti bintang jatuh yang baik hati 💫. Tahun depan kita jumpa atau enggak ya? melihat deh 😁"></p>
     </section>
 
     <section class="slide slide3">
       <div class="text-wrapper">
         <h1 data-typing="Venus & Kamu 🌟"></h1>
-        <p data-typing="Kamu suka Venus... Tapi kamu lebih bersinar dari planet mana pun."></p>
-        <p data-typing="Boleh gak... aku jadi alien dari Bumi yang nemenin kamu di orbit bahagia? 🚀"></p>
+        <p class="spesial" data-typing="Kamu suka Venus… tapi jujur aja, menurutku kamu jauh lebih bercahaya dari Venus itu sendiri. Boleh kali ya aku numpang di orbitmu… biar bisa dapat sedikit cahaya dari kamu?"></p>
       </div>
     </section>
 
     <section class="slide slide4">
       <h1 data-typing="Surprise buat Glo 💕"></h1>
-      <p data-typing="Semoga kamu selalu bahagia dan tetap bersinar kayak Venus 🌟"></p>
-      <button onclick="showSurprise()">Klik aku, Glo 💫</button>
+      <p data-typing="Semoga kamu selalu bahagia, penuh tawa dan cerita indah. Semoga setiap langkahmu selalu dipenuhi kebaikan dan keberuntungan. Dan semoga kamu terus bersinar seindah Venus di langit malam, membawa cahaya untuk orang-orang di sekitarmu termasuk aku wkwkwkwk."></p>
+      <button onclick="showSurprise()">Klik Ini, Glo 💫</button>
       <canvas id="fireworks"></canvas>
       <div id="wish-container"></div>
     </section>
@@ -342,24 +418,60 @@
       <h1 data-typing="Terakhir..."></h1>
       <p data-typing="Website ini mungkin sederhana..."></p>
       <p data-typing="...tapi dikirim tepat di jam 00.00 cuma buat kamu."></p>
-      <img class="profile" src="img/profil.png" alt="Foto Ganti">
-      <p class="caption">sory ya ga ada foto mu :(</p>
+      <img class="profile" src="img/profil(1).png" alt="Foto Ganti">
+      <p class="caption">Anggap lah ini foto mu, soalnya ga ada fotomu samaku hehe</p>
       <div class="snow"></div>
     </section>
 
     <section class="slide slide6">
+      <h1 class="cakeglo">🎂 Kue Ulang Tahun Untuk Glo 🎂</h1>
+      <div class="cake">
+        <div class="candle" style="left:20%;">
+          <div class="flame"></div>
+        </div>
+        <div class="candle" style="left:35%;">
+          <div class="flame"></div>
+        </div>
+        <div class="candle" style="left:50%;">
+          <div class="flame"></div>
+        </div>
+        <div class="candle" style="left:65%;">
+          <div class="flame"></div>
+        </div>
+        <div class="candle" style="left:80%;">
+          <div class="flame"></div>
+      </div>
+    </div>
+    <button onclick="toggleLilin()">Nyalakan / Matikan Lilin</button>
+    </section>
+    <audio id="happy" src="audio/happy.mp3" preload="auto"></audio>
+
+    <section class="slide slide7">
       <div class="final-message-box">
-        <h1>Pesan Terakhir Buat Kamu 💌</h1>
+        <h1>Message for you 💌</h1>
         <div class="scroll-box">
-          <p>
-            Sudah lebih dari dua tahun sejak kita mulai chat, dan jujur aku gak pernah nyangka bisa kenal sedekat ini sama kamu. Entah kenapa ya, tiap kali ngobrol sama kamu rasanya beda aja—kalau ada apa-apa aku lebih nyaman cerita ke kamu dibanding ke orang lain. Hehe, gak tau kenapa juga, tapi ya begitu lah 😆.
+            <p>Okay, I'll use English to sound cool (even though I use Google Translate 🤣),<br>
+            It's been over two years since we started talking, and honestly, I never thought I'd get to know you this well (even though you said you didn't know me yesterday 😌 but oh well). I don't know why, but every time I chat to you, I feel different. Every time I chat to you, I feel more comfortable talking to you than to anyone else. Hehe, I don't know why either, but that's how it is 😆.<br>
 
-            Oh iya, kemarin kamu menang lomba kan? Aku bangga banget sama kamu! Dari awal aku yakin kamu pasti bisa, dan ternyata bener. Jangan lupa, kita masih punya tantangan: siapa yang sidang duluan 👽👾. Walaupun, kalau jujur sih… aku udah tau kamu yang bakal menang. Soalnya kamu selalu jadi yang terdepan.
+            Oh yeah, you won the race yesterday, right? I'm so proud of you! From the start, I was sure you could do it, and you did. Don't forget, we still have a challenge: who can finish first 👽👾. But honestly... I already knew you'd win. You're always first.<br>
 
-            Selamat ulang tahun ya, Glo! 🎉 Hari ini mungkin cuma lewat sebentar, tapi aku berharap kenangan ini bisa bertahan lama. Kamu itu bener-bener spesial, lebih dari yang bisa aku ungkapin lewat kata-kata.
+            Happy birthday, Glo! 🎉 Today may have gone by so fast, but I hope these memories last forever. You are truly special, more than words can express.<br>
 
-            Semoga setiap langkahmu selalu dipenuhi kebahagiaan, doa yang baik, dan cinta dari orang-orang di sekitarmu. Jangan lupa, aku selalu ada buat dukung kamu, apapun yang terjadi. Teruslah bersinar, karena dunia ini jauh lebih indah dengan kamu di dalamnya ✨.
-          </p>
+            It seems like the sky, the moon, the stars, and Venus all know that Glo's birthday is this month, so this month there's so much beauty happening in space.<br>
+
+            And after I graduate, Glo might have to continue your studies in Bandung again, so that some of us will still live in Bandung, Glo's favorite city, hahaha.<br>
+
+            May every step you take be filled with happiness, good wishes, and love from those around you. Don't forget, I'm always here to support you, no matter what. Keep shining, because the world is so much more beautiful with you ✨.<br>
+
+            Oh yeah, happy birthday from Sirius to Glo too, even though he's gone now. Thank you for giving me the name he says before he left.</p>
+        </div>
+         <div class="photo-gallery">
+          <img src="img/profil(0).png" alt="Foto 1">
+          <img src="img/profil(2).png" alt="Foto 2">
+          <img src="img/profil(3).jpg" alt="Foto 3">
+          <img src="img/profil(4).jpg" alt="Foto 4">
+          <img src="img/profil(5).jpg" alt="Foto 5">
+          <img src="img/profil(6).jpg" alt="Foto 6">
         </div>
       </div>
     </section>
@@ -372,6 +484,7 @@
     <button onclick="prevSlide()">⬅</button>
     <button onclick="nextSlide()">➡</button>
   </div>
+  
 
   <script>
     let currentSlide = 0;
@@ -462,7 +575,7 @@
         }
         update() {
           if (!this.exploded) {
-            this.y -= 6;
+            this.y -= 15;
             if (this.y <= this.targetY) {
               this.exploded = true;
               this.explode();
@@ -483,7 +596,7 @@
           this.particles.forEach(p => p.draw());
         }
         explode() {
-          for (let i = 0; i < 200; i++) {
+          for (let i = 0; i < 400; i++) {
             this.particles.push(new Particle(this.x, this.y, this.color));
           }
         }
@@ -528,12 +641,12 @@
       }
 
       animate();
-      setInterval(launchFirework, 600);
+      setInterval(launchFirework, 300);
 
       setTimeout(() => {
         Swal.fire({
           title: '✨ Ulang Tahunmu ✨',
-          text: 'Masukkan keinginan kamu di ulang tahun ini 😊',
+          text: 'Nah ini dia Kembang api yang ku bilang kemarin kalau glo masih ingat, Sekarang masukkan keinginan kamu di ulang tahun ini 😊, santai aja aku ga tau, hanya Tuhan sama kamu yang tau',
           input: 'text',
           inputPlaceholder: 'Aku pengen...',
           confirmButtonText: 'Kirim',
@@ -548,7 +661,7 @@
 
     function jawabanIya() {
       Swal.fire({
-        title: "Kenapa tuh?",
+        title: "Karna udah ganti hari,eh tapi hari kali ini beda, kenapa ya?",
         input: "text",
         inputPlaceholder: "Coba jawab...",
         showCancelButton: true,
@@ -586,8 +699,52 @@
     function startWebsite() {
       document.getElementById('start-screen').style.display = 'none';
       document.getElementById('bgm').play();
+
+      bgm.addEventListener('ended', () => {
+        bgm.currentTime = 0;
+        bgm.play();
+    });
       runTypewriter(0);
     }
+    function toggleLilin() {
+      const flames = document.querySelectorAll(".flame");
+      const bgm = document.getElementById("bgm");
+      const happy = document.getElementById("happy");
+
+      // cek apakah lilin sudah menyala (ada yang display block)
+      let adaMenyala = false;
+      flames.forEach(f => {
+        if (f.style.display === "block") {
+          adaMenyala = true;
+        }
+      });
+
+      if (!adaMenyala) {
+        // artinya belum menyala → kita nyalakan dan ganti lagu
+        flames.forEach(f => { f.style.display = "block"; });
+        // stop bgm
+        if (bgm) {
+          bgm.pause();
+          bgm.currentTime = 0;
+        }
+        // play happy
+        if (happy) {
+          happy.play();
+        }
+      } else {
+        // arti sudah menyala → matikan lilin & kembali ke bgm
+        flames.forEach(f => { f.style.display = "none"; });
+        if (happy) {
+          happy.pause();
+          happy.currentTime = 0;
+        }
+        if (bgm) {
+          bgm.play();
+        }
+      }
+    }
+
+
   </script>
 </body>
 </html>
