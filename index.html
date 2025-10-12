@@ -35,6 +35,9 @@
       gap: 1em;
       text-align: center;
     }
+    #start-screen h1{
+      font-size: 25px;
+    }
 
     #start-screen button {
       background-color: #ff5ec2;
@@ -66,13 +69,18 @@
       text-align: center;
       position: relative;
     }
-
+    .slide2 h1{
+      font-size: 20px;
+    }
+    .slide2 p{
+      font-size: 15px;
+    }
     .slide1 { background-image: url('img/bg5.png'); }
     .slide2 { background-image: url('img/bg4.png'); }
     .slide3 { background-image: url('img/bg6.png'); }
     .slide4 { background-image: url('img/bg9.png'); }
     .slide5 { background-image: url('img/bg8.png'); }
-    .slide6 { background-image: url('img/bg11.png'); }
+    .slide6 { background-image: url('img/bg11.jpg'); }
     .slide7 { background-image: url('img/bg10.png'); }
 
     h1 {
@@ -120,7 +128,7 @@
 
     .caption {
       margin-top: 1em;
-      font-size: 1em;
+      font-size: 5px;
       color: #ccc;
     }
 
@@ -153,6 +161,22 @@
       top: -80px;
       text-shadow: 2px 2px 4px black;
     }
+    #judul-slide1{
+      font-size: 20px;
+    }
+    .slide3 h1{
+      font-size: 20px
+    }
+    .slide3 p{
+      font-size: 15px
+    }
+    .slide4 h1{
+      font-size: 20px;
+    }
+    .slide4 p{
+      font-size: 12px;
+      width: 300px;
+    }
 
     .slide3 h1, .slide3 p,
     .slide4 h1, .slide4 p {
@@ -167,6 +191,8 @@
       font-family: 'Bakso Sapi';
       src: url('BaksoSapi.ttf') format('truetype');
     }
+    .slide5 h1{font-size: 20px;}
+    .slide5 p{font-size: 12px;}
     .slide5 p , .slide5 h1{
       color: white;
       font-family: 'Bakso Sapi', cursive;
@@ -177,15 +203,15 @@
       flex-direction: column;
       justify-content: flex-start;
       align-items: center;
-      padding: 3em;
       overflow-y: auto;  /* penting: biar bisa scroll kalau teks panjang */
       text-align: left;
     }
 
     .slide6 h1 {
-      font-size: 2.2em;
+      font-size: 20px;
       margin-bottom: 1em;
       text-align: center;
+      width: 100%;
     }
 
     .slide6 p {
@@ -199,18 +225,23 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      max-width: 80%;
+      width: 100%;
       margin: 0 auto;
       text-align: center;
     }
+    .final-message-box h1{
+      margin-top: 20px;
+      font-size: 20px;
+    }
 
     .scroll-box {
+      width: 100%;
+      font-size: 10px;
       display: flex;
       justify-content: center;
-      max-height: 300px; /* tinggi box scroll */
+      max-height: 200px; /* tinggi box scroll */
       overflow-y: auto;
       margin-top: 1em;
-      padding: 1em;
       border: 2px solid rgba(255, 255, 255, 0.4);
       border-radius: 12px;
       background: rgba(0, 0, 0, 0.4);
@@ -240,10 +271,12 @@
       80% { opacity: 1; transform: translateY(0); }
       100% { opacity: 0; transform: translateY(-30px); }
     }
-
+    .photo-gallery{
+      width: 150%;
+    }
     .photo-gallery img {
-      width: 160px;
-      height: 160px;
+      width: 60px;
+      height:60px;
       object-fit: cover;
       border-radius: 12px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.4);
@@ -258,6 +291,7 @@
     .photo-gallery img:nth-child(3) { animation-delay: 2s; }
     .photo-gallery img:nth-child(4) { animation-delay: 3s; }
     .photo-gallery img:nth-child(5) { animation-delay: 4s; }
+    .photo-gallery img:nth-child(6) { animation-delay: 5s; }
 
 
 
@@ -323,20 +357,21 @@
       100% { top: 110%; opacity: 0; }
     }
     .cake {
+      top: -60px;
       position: relative;
-      width: 500px;
-      height: 200px;
+      width: 130px;
+      height: 55px;
       background-image: url(img/kue.png);
-      background-size: contain;
+      background-size: cover;
       border-radius: 10px;
       margin-top: 350px;
     }
 
     .candle {
       position: absolute;
-      top: -70px;
-      width: 30px;
-      height: 100px;
+      top: -29px;
+      width: 14px;
+      height: 40px;
       background: #fff;
       border-radius: 5px;
       box-shadow: 0 0 5px rgba(0,0,0,0.2);
@@ -347,8 +382,8 @@
       top: -20px;
       left: 50%;
       transform: translateX(-50%);
-      width: 30px;
-      height: 45px;
+      width: 10px;
+      height: 25px;
       background: radial-gradient(circle at 50% 50%, #ffeb3b, #ff9800);
       border-radius: 50%;
       display: none;
@@ -357,6 +392,8 @@
     }
     .cakeglo{
       color: black;
+      width: 300px;
+      text-shadow: 0px 0px 10px yellow;
     }
 
     @keyframes flicker {
@@ -426,21 +463,15 @@
     <section class="slide slide6">
       <h1 class="cakeglo">🎂 Kue Ulang Tahun Untuk Glo 🎂</h1>
       <div class="cake">
-        <div class="candle" style="left:20%;">
+        <div class="candle" style="left:25%;">
           <div class="flame"></div>
         </div>
-        <div class="candle" style="left:35%;">
-          <div class="flame"></div>
-        </div>
-        <div class="candle" style="left:50%;">
+        <div class="candle" style="left:45%;">
           <div class="flame"></div>
         </div>
         <div class="candle" style="left:65%;">
           <div class="flame"></div>
         </div>
-        <div class="candle" style="left:80%;">
-          <div class="flame"></div>
-      </div>
     </div>
     <button onclick="toggleLilin()">Nyalakan / Matikan Lilin</button>
     </section>
